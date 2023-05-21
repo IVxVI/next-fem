@@ -1,10 +1,20 @@
 import Image from 'next/image'
 import Header from './components/Header';
 
-export default function Home() {
+
+async function getData() {
+  const res = await fetch("https://www.reddit.com/r/reactjs/comments/12ltr8r/is_reactjs_and_nextjs_still_worth_learning_in_2023/.json");
+  return res.json();
+}
+
+export default async function Home() {
+  const data = await getData();
+  const info = data[0].data.children[0].data.selftext;
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header />
+      <h1>{info}</h1>
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Get started by editing&nbsp;
